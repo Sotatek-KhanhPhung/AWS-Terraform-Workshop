@@ -9,8 +9,11 @@ A beginner-friendly guide to setting up AWS infrastructure using **Terraform**! 
 ✅ **Deploy AWS Resources** using Terraform  
 ✅ **Manage Infrastructure as Code (IaC)**  
 ✅ **Use Remote State Storage** with S3 + DynamoDB  
-✅ **Create VPC, Subnets, and EC2 Instances**
-✅ **Configure Security Groups and Networking**
+✅ **Create VPC, Subnets, and EC2 Instances**  
+✅ **Configure Security Groups and Networking**  
+✅ **Implement CloudWatch Monitoring**  
+✅ **Apply Security Best Practices**  
+✅ **Optional: Private Subnets with NAT Gateway**  
 ✅ **Apply Best Practices** for Terraform Code Structure
 
 ---
@@ -20,9 +23,9 @@ A beginner-friendly guide to setting up AWS infrastructure using **Terraform**! 
 ```tree
 AWS-Terraform-Workshop/
 │── scripts/          # Shell scripts for user data and setup
-│   └── user_data.sh  # Bootstrap script for EC2 instances
-│── main.tf           # Main Terraform configuration (VPC, EC2, networking)
-│── variables.tf      # Input values for easy customization
+│   └── user_data.sh  # Bootstrap script for EC2 instances (Amazon Linux 2023)
+│── main.tf           # Main Terraform configuration (VPC, EC2, networking, monitoring)
+│── variables.tf      # Input values with validation for easy customization
 │── outputs.tf        # Output values of deployed resources
 │── backend.tf        # Remote state setup (S3 + DynamoDB)
 │── backend-variables.tf # Variables for backend configuration
@@ -91,6 +94,25 @@ terraform init \
 
 ---
 
+### **3️⃣ Alternative: Use Helper Scripts**  
+
+For a safer deployment workflow, use the provided helper scripts:
+
+```sh
+# Validate and format your Terraform code
+./scripts/validate.sh
+
+# Deploy with safety checks
+./scripts/deploy.sh
+
+# Destroy resources with multiple confirmations
+./scripts/destroy.sh
+```
+
+🔹 **Windows users**: Use Git Bash or WSL to run these shell scripts
+
+---
+
 ### **4️⃣ Plan & Apply Changes**  
 
 ```sh
@@ -107,8 +129,12 @@ terraform apply
 ⚡ This will create a complete infrastructure including:
 - VPC with proper CIDR blocks
 - Public subnet with internet connectivity
-- Security groups with configurable ports
-- EC2 instance with Apache web server
+- **Optional**: Private subnet with NAT Gateway for secure resources
+- Security groups with configurable ports and CIDR restrictions
+- EC2 instance with Apache web server (Amazon Linux 2023)
+- **IAM roles** for CloudWatch monitoring
+- **CloudWatch agent** for metrics collection
+- **Enhanced error handling** and logging
 
 ---
 
@@ -140,17 +166,51 @@ terraform destroy
 
 ---
 
-## 📝 **Best Practices for Beginners**  
+## 📝 **Best Practices for Beginners**
 
-🔹 **Always use Remote State** – Store Terraform state in S3 to prevent conflicts.  
-🔹 **Use Variables and Outputs** – Parameterize your code for flexibility.
-🔹 **Separate User Data Scripts** – Keep bootstrap scripts in separate files.
-🔹 **Apply Proper Tagging** – Tag resources consistently for better management.
-🔹 **Use Dynamic Blocks** – For repeatable resource configurations.
-🔹 **Check Plan Before Applying** – Always run `terraform plan` first!  
-🔹 **Security First** – Restrict security group rules to minimum required access.
+- **Always use Remote State** – Store Terraform state in S3 to prevent conflicts.
+- **Use Variables and Outputs** – Parameterize your code for flexibility.
+- **Separate User Data Scripts** – Keep bootstrap scripts in separate files.
+- **Apply Proper Tagging** – Tag resources consistently for better management.
+- **Use Dynamic Blocks** – For repeatable resource configurations.
+- **Check Plan Before Applying** – Always run `terraform plan` first!
+- **Security First** – Restrict security group rules to minimum required access.
+- **Input Validation** – Add validation rules to prevent misconfiguration.
+- **Monitoring & Logging** – Implement CloudWatch for observability.
+- **Error Handling** – Use proper error handling in user data scripts.
+- **Latest AMIs** – Always use updated AMIs for security patches.
 
 ---
+
+## 🚀 **Advanced Features**  
+
+### **Private Subnet with NAT Gateway**  
+
+Enable private subnet creation by setting:  
+```hcl
+enable_private_subnet = true
+private_subnet_cidr   = "10.0.2.0/24"
+```  
+
+This creates:  
+- Private subnet isolated from the internet  
+- NAT Gateway for outbound internet access  
+- Private route table  
+- Elastic IP for NAT Gateway  
+
+### **Security Enhancements**  
+
+- **CIDR Restrictions**: Limit SSH access to specific IP ranges  
+- **IAM Roles**: Least privilege access for EC2 instances  
+- **CloudWatch Monitoring**: Automated metrics collection  
+
+### **Monitoring & Observability**  
+
+- **CloudWatch Metrics**: CPU, Memory, Disk utilization  
+- **Instance Metadata**: Dynamic display on web page  
+- **Error Logging**: Comprehensive error handling in user data  
+
+---  
 
 ## 🤝 **Contributing**  
 

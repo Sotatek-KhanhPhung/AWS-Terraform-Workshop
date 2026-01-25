@@ -73,3 +73,24 @@ output "web_url" {
   description = "URL to access the web server"
   value       = "http://${aws_instance.web.public_dns}"
 }
+
+# Private Subnet Outputs (conditional)
+output "private_subnet_id" {
+  description = "The ID of the created private subnet"
+  value       = var.enable_private_subnet ? aws_subnet.private_subnet[0].id : null
+}
+
+output "private_subnet_cidr" {
+  description = "CIDR block of the private subnet"
+  value       = var.enable_private_subnet ? aws_subnet.private_subnet[0].cidr_block : null
+}
+
+output "nat_gateway_id" {
+  description = "The ID of the NAT Gateway"
+  value       = var.enable_private_subnet ? aws_nat_gateway.nat[0].id : null
+}
+
+output "nat_gateway_public_ip" {
+  description = "Public IP of the NAT Gateway"
+  value       = var.enable_private_subnet ? aws_eip.nat_eip[0].public_ip : null
+}
