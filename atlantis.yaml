@@ -1,0 +1,35 @@
+version: 3
+
+projects:
+  - name: aws-terraform-workshop
+    dir: .
+    workspace: default
+
+    autoplan:
+      enabled: true
+      when_modified:
+        - "*.tf"
+        - "*.tfvars"
+        - "backend.hcl"
+        - "scripts/**"
+        - ".terraform.lock.hcl"
+
+    workflow: workshop
+
+workflows:
+  workshop:
+    plan:
+      steps:
+        - init:
+            extra_args:
+              - "-backend-config=backend.hcl"     # Use backend.hcl for backend configuration
+
+        - run: terraform fmt -check
+
+        - run: terraform validate
+
+        - plan
+
+    apply:
+      steps:
+        - apply

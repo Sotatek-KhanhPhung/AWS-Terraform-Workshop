@@ -8,9 +8,3 @@ terraform {
     }
   }
 }
-
-provider "aws" {
-  region                   = var.aws_region
-  shared_credentials_files = ["~/.aws/credentials"]  # Uses local AWS credentials
-  profile                  = var.aws_profile         # Allows specifying AWS profile (optional)
-}
