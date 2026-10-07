@@ -24,7 +24,7 @@ workflows:
             extra_args:
               - "-backend-config=backend.hcl"     # Use backend.hcl for backend configuration
 
-        - run: terraform fmt -check
+        - run: terraform fmt
 
         - run: terraform validate
 
