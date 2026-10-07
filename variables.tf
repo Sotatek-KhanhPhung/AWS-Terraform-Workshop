@@ -122,6 +122,6 @@ variable "tags" {
   default = {
     Environment = "dev"
     Project     = "AWS-Terraform-Workshop"
-    Owner       = "NotHarshhaa"
+    Owner       = "KhanhPhung"
   }
 }
