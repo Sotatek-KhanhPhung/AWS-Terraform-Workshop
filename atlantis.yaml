@@ -5,6 +5,9 @@ projects:
     dir: .
     workspace: default
 
+    repo_locks:
+      mode: on_apply
+
     autoplan:
       enabled: true
       when_modified:
