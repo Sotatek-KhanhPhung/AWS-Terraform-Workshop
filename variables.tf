@@ -41,7 +41,7 @@ variable "ami_id" {
 variable "instance_type" {
   description = "EC2 instance type"
   type        = string
-  default     = "t2.micro"
+  default     = "t3.small"
 
   validation {
     condition     = contains(["t2.nano", "t2.micro", "t2.small", "t2.medium", "t3.nano", "t3.micro", "t3.small", "t3.medium", "t3.large"], var.instance_type)
@@ -97,7 +97,7 @@ variable "private_subnet_cidr" {
 variable "nat_instance_type" {
   description = "EC2 instance type for NAT gateway (if using NAT instance)"
   type        = string
-  default     = "t3.micro"
+  default     = "t3.small"
 
   validation {
     condition     = contains(["t2.nano", "t2.micro", "t2.small", "t2.medium", "t3.nano", "t3.micro", "t3.small", "t3.medium", "t3.large"], var.nat_instance_type)
