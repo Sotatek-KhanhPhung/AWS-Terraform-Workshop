@@ -18,7 +18,7 @@ variable "vpc_cidr" {
 variable "public_subnet_cidr" {
   description = "CIDR block for the public subnet"
   type        = string
-  default     = "10.0.1.0/24"
+  default     = "10.10.1.0/24"
 
   validation {
     condition     = can(cidrhost(var.public_subnet_cidr, 0))
@@ -41,7 +41,7 @@ variable "ami_id" {
 variable "instance_type" {
   description = "EC2 instance type"
   type        = string
-  default     = "t3.small"
+  default     = "t2.micro"
 
   validation {
     condition     = contains(["t2.nano", "t2.micro", "t2.small", "t2.medium", "t3.nano", "t3.micro", "t3.small", "t3.medium", "t3.large"], var.instance_type)
